@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive House Blueprint</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+      flex-direction: column;
+      align-items: center;
+      background-color: #e6f0fa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    }
+    svg {
+      width: 600px;
+      border: 3px solid #1d4e89;
+      border-radius: 12px;
+      background-color: #f9fbfd;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    .room, .stair {
+      stroke: #1d3557;
+      stroke-width: 2;
+      cursor: pointer;
+      transition: fill 0.3s, transform 0.2s;
+    }
+    #living, #kitchen, #utility, #bathroom, #balcony, #dining {
+      fill: #4682b4;
+    }
+    #passage {
+      fill: #f9e79f;
+    }
+    #maindoor, #bathroomdoor, #utilitydoor, #balconydoor{
+      fill:#5C4033;
+    }
+    .stair {
+      fill: #7f8c8d;
+    }
+    .room:hover {
+      filter: brightness(1.25);
+      transform: scale(1.02);
+    }
+    .stair:hover {
+      filter: brightness(1.2);
+    }
+    text {
+      font-size: 14px;
+      font-weight: bold;
+      fill: #fff;
+    }
+    .tooltip {
+      position: absolute;
+      background: #1d3557;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+      pointer-events: none;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color:#1d3557;">Interactive Portal</h1>
+  <div class="tooltip" id="tooltip"></div>
+
+  <svg id="houseSVG" viewBox="0 0 400 600">
+    <!-- Rooms -->
+    <polygon id="living" class="room"
+      points="0,0 270,0 270,400 170,400 170,300 0,300"/> 
+    <text x="100" y="150">Living Room</text>
+    
+    <rect id="kitchen" class="room" x="80" y="400" width="190" height="200"/> 
+    <text x="150" y="500">Kitchen</text>
+    <rect id="dining" class="room" x="270" y="400" width="130" height="150"/> 
+    <text x="300" y="475">Dining Area</text>
+
+    <rect id="utility" class="room" x="0" y="400" width="80" height="200"/> 
+    <text x="20" y="500">Utility</text>
+    <rect id="utilitydoor"  x="75" y="450" width="10" height="50"/> 
+    
+
+    <rect id="bathroom" class="room" x="0" y="300" width="170" height="100"/> 
+    <text x="50" y="350">Bathroom</text>    
+    <rect id="bathroomdoor" x="100" y="295" width="50" height="10"/> 
+    
+    
+    <polygon id="passage" class="room"
+      points="270,210 340,210 340,240 400,240 400,400 270,400"/> 
+    <text x="310" y="300">Passage</text>
+    <rect id="maindoor" x="265" y="300" width="10" height="100"/> 
+
+    <rect id="balcony" class="room" x="270" y="550" width="130" height="50"/> 
+    <text x="310" y="575">Balcony</text>
+    <rect id="balconydoor" x="280" y="545" width="50" height="10"/> 
+    <text x="310" y="575">Balcony</text>
+
+    <!-- Staircase on right side -->
+    <rect class="stair" x="270" y="0" width="70" height="30"/>
+    <rect class="stair" x="270" y="30" width="70" height="30"/>
+    <rect class="stair" x="270" y="60" width="70" height="30"/>
+    <rect class="stair" x="270" y="90" width="70" height="30"/>
+    <rect class="stair" x="270" y="120" width="70" height="30"/>
+    <rect class="stair" x="270" y="150" width="70" height="30"/>
+    <rect class="stair" x="270" y="180" width="70" height="30"/>
+    
+
+    <rect class="stair" x="340" y="0" width="70" height="30"/>
+    <rect class="stair" x="340" y="30" width="70" height="30"/>
+    <rect class="stair" x="340" y="60" width="70" height="30"/>
+    <rect class="stair" x="340" y="90" width="70" height="30"/>
+    <rect class="stair" x="340" y="120" width="70" height="30"/>
+    <rect class="stair" x="340" y="150" width="70" height="30"/>
+    <rect class="stair" x="340" y="180" width="70" height="30"/>
+    <rect class="stair" x="340" y="210" width="70" height="30"/>
+  </svg>
+
+  <script>
+    const tooltip = document.getElementById("tooltip");
+    const houseSVG = document.getElementById("houseSVG");
+
+    const roomDetails = {
+      living: "Living Room: Spacious area for guests",
+      kitchen: "Open Kitchen: Modular design with island and attached dining area on the right",
+      dining: "Dining Area: Modular dining table with a L shaped crockery unit, 12x10 ft",
+      utility: "Utility: Includes wardrobe and balcony, No description",
+      bathroom: "Bathroom: Modern fittings",
+      passage: "Passage: Connects different rooms",
+      stairs: "Staircase: Steps connecting floors, right-side placement",
+      maindoor: "Main Door: Opens inwards",
+      bathroomdoor: "Bathroom Door: Opens towards the living room",
+      balconydoor: "Balcony Door: Opens towards the balcony",
+      utilitydoor: "Utility Door: Opens towards the utility",
+      balcony: "Balcony: Open Space, No description"
+    };
+
+    houseSVG.querySelectorAll(".room, .stair").forEach(el => {
+      el.addEventListener("mousemove", (e) => {
+        tooltip.style.display = "block";
+        tooltip.style.left = e.pageX + 15 + "px";
+        tooltip.style.top = e.pageY + 15 + "px";
+        tooltip.textContent = roomDetails[el.id || 'stairs'];
+      });
+      el.addEventListener("mouseleave", () => {
+        tooltip.style.display = "none";
+      });
+      el.addEventListener("click", () => {
+        if (el.id === "living") {
+          window.location.href = "livingroom.html"; // redirect to living room page
+        } else {
+          alert(roomDetails[el.id] || "Staircase details not available");
+        }
+      });
+      el.addEventListener("click", () => {
+        if (el.id === "kitchen") {
+          window.location.href = "kitchen.html"; // redirect to living room page
+        } else {
+          alert(roomDetails[el.id] || "Staircase details not available");
+        }
+      });
+      el.addEventListener("click", () => {
+        if (el.id === "dining") {
+          window.location.href = "dining.html"; // redirect to kitchen room page
+        } else {
+          alert(roomDetails[el.id] || "Staircase details not available");
+        }
+      });
+      el.addEventListener("click", () => {
+        if (el.id === "bathroom") {
+          window.location.href = "bathroom.html"; // redirect to bathroom room page
+        } else {
+          alert(roomDetails[el.id] || "Staircase details not available");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

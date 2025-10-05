@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Living Room Components</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f0f7ff;
+      font-family: Arial, sans-serif;
+      margin-top: 40px;
+    }
+    svg {
+      width: 600px;
+      height: 400px;
+      border: 3px solid #1d4e89;
+      border-radius: 10px;
+      background-color: #ecf6ff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    .item {
+      stroke: #1d3557;
+      stroke-width: 2;
+      transition: transform 0.2s, fill 0.2s;
+      cursor: pointer;
+    }
+    #divan ,#sofa, #chair{
+        fill:#C19A6B
+    }
+    #maindoor, #bathroomdoor{
+        fill:#5C4033
+    }
+    #tvunit{
+        fill:#A39887
+    }
+    #rug{
+        fill:#C2B9B0
+    }
+    #sidetable , #centertable{
+        fill:#4A3F35
+    }
+    .item:hover {
+      fill: #708238;
+      transform: scale(1.05);
+    }
+    text {
+      fill: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      text-anchor: middle;
+    }
+    button {
+      margin-top: 20px;
+      padding: 8px 16px;
+      border: none;
+      background-color: #1d3557;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #27496d;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color:#1d3557;">Living Room Components</h1>
+  <svg viewBox="0 0 500 500" width="500" height="500">
+    <defs>
+    <clipPath id="livingrommShape">
+      <polygon points="50,50 320,50 320,450 220,450 220,350 50,350" />
+    </clipPath>
+  </defs>
+  <rect width="500" height="500" fill="#b3e5fc" clip-path="url(#livingrommShape)" />
+
+    <rect class="item" id="sofa" x="285" y="60" width="30" height="200"/>
+    <polygon class="item" id="tvunit"
+      points="60,120 80,120 80,150 110,150 110,250 80,250 80,280 60,280 "/> 
+    <rect class="item" id="tv" x="70" y="175" width="10" height="50"/>
+    <rect class="item" id="chair" x="285" y="270" width="30" height="50"/>
+    <rect class="item" id="chair" x="100" y="310" width="50" height="30"/>
+    <rect class="item" id="divan" x="60" y="60" width="180" height="50"/>
+    <rect class="item" id="maindoor" x="310" y="365" width="5" height="80"/>
+    <rect class="item" id="bathroomdoor" x="170" y="340" width="40" height="5"/>
+    <rect class="item" id="sidetable" x="60" y="310" width="30" height="30"/>
+    <rect class="item" id="centertable" x="175" y="175" width="40" height="55"/>
+    <circle class="item" id="lamp" cx="75" cy="325" r="10" fill="#ffb300" />
+    <rect class="item" id="rug" x="135" y="135" width="120" height="135" opacity="0.6"/>
+   
+  </svg>
+
+  <button onclick="window.location.href='project1.html'">⬅ Back to Blueprint</button>
+
+  <script>
+    const items = {
+      sofa: "A comfortable 3-seater sofa with cushions.",
+      divan: "Kind of a single bed for relaxing.",
+      chair: "Single Sofa.",
+      tv: "55-inch LED Smart TV.",
+      tvunit: "Modern TV cabinet with a subtle design.",
+      centertable: "Glass-top coffee table in the center.",
+      lamp: "Corner lamp providing warm light.",
+      rug: "Soft wool rug covering the sitting area.",
+      sidetable: "Lamp bearing table in the side.",
+      maindoor: "Main door of the house.",
+      bathroomdoor: "bathroom door.",
+    };
+
+    document.querySelectorAll(".item").forEach(el => {
+      el.addEventListener("click", () => {
+        alert(items[el.id]);
+      });
+    });
+  </script>
+</body>
+</html>

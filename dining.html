@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dining Area Components</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f0f7ff;
+      font-family: Arial, sans-serif;
+      margin-top: 40px;
+    }
+    svg {
+      width: 600px;
+      height: 400px;
+      border: 3px solid #1d4e89;
+      border-radius: 10px;
+      background-color: #ecf6ff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    .item {
+      stroke: #1d3557;
+      stroke-width: 2;
+      transition: transform 0.2s, fill 0.2s;
+      cursor: pointer;
+    }
+    #dining_table{
+        fill:#C19A6B
+    }
+    #balconydoor, #balconywindow{
+        fill:#5C4033
+    }
+    #fridge{
+        fill:#708090
+    }
+    #dining_bench, #dining_chair{
+        fill:#E2725B
+    }
+    #crockery{
+        fill:#C2B9B0
+    }
+    .item:hover {
+      fill: #708238;
+      transform: scale(1.05);
+    }
+    text {
+      fill: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      text-anchor: middle;
+    }
+    button {
+      margin-top: 20px;
+      padding: 8px 16px;
+      border: none;
+      background-color: #1d3557;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #27496d;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color:#1d3557;">Kitchen Components</h1>
+  <svg viewBox="0 0 400 500" width="400" height="500">
+    <defs>
+    <clipPath id="KitchenShape">
+      <polygon points="50,50 350,50 350,450 50,450" />
+    </clipPath>
+  </defs>
+  <rect width="400" height="500" fill="#b3e5fc" clip-path="url(#KitchenShape)" />
+     <rect class="item" id="crockery" x="60" y="60" width="280" height="70"/>
+    <rect class="item" id="dining_table" x="125" y="190" width="140" height="170"/>
+    <rect class="item" id="dining_bench" x="275" y="200" width="50" height="150"/>
+    <rect class="item" id="dining_chair" x="145" y="150" width="40" height="30"/>
+    <rect class="item" id="dining_chair" x="205" y="150" width="40" height="30"/>
+    <rect class="item" id="dining_chair" x="85" y="225" width="30" height="40"/>
+    <rect class="item" id="dining_chair" x="85" y="285" width="30" height="40"/>
+    <rect class="item" id="dining_chair" x="145" y="370" width="40" height="30"/>
+    <rect class="item" id="dining_chair" x="205" y="370" width="40" height="30"/>
+    <rect class="item" id="balconydoor"  x="60" y="435" width="90" height="10"/>
+    <rect class="item" id="balconywindow"  x="280" y="435" width="60" height="10"/>
+   
+   
+  </svg>
+
+  <button onclick="window.location.href='project1.html'">⬅ Back to Blueprint</button>
+
+  <script>
+    const items = {
+      dining_table: "Modern with pure teak wood.",
+      dining_bench: "Bench for 3 people to sit.",
+      dining_chair: "Chair",
+      crockery: "Crockery Unit: vertically L shaped to store crockery",
+      balconydoor: "Balcony door.",
+      balconywindow: "Balcony window."
+    };
+
+    document.querySelectorAll(".item").forEach(el => {
+      el.addEventListener("click", () => {
+        alert(items[el.id]);
+      });
+    });
+  </script>
+</body>
+</html>
